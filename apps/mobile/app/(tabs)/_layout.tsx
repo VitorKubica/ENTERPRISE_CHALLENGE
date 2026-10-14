@@ -17,6 +17,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" options={{ title: 'Início', tabBarIcon: ({ color }) => <House size={22} color={color} strokeWidth={1.5} /> }} />
       <Tabs.Screen name="atividade" options={{ title: 'Recargas e fatura', tabBarLabel: 'Recargas', tabBarIcon: ({ color }) => <Receipt size={22} color={color} strokeWidth={1.5} /> }} />
       <Tabs.Screen name="gestor" options={{ title: 'Gestor', tabBarIcon: ({ color }) => <LayoutDashboard size={22} color={color} strokeWidth={1.5} /> }} />
+      <Tabs.Screen name="evidencias" options={{ title: 'Evidências', tabBarIcon: ({ color }) => <ClipboardCheck size={22} color={color} strokeWidth={1.5} /> }} />
     </Tabs>
   );
 }
