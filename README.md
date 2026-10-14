@@ -1,109 +1,173 @@
-# EV ChargeOps — Plataforma de Gestão de Recarga Compartilhada
+# EV ChargeOps — O carregador como porta de entrada do ecossistema GoodWe
 
 **Enterprise Challenge 2026 — GoodWe × FIAP**
 Sprint 01 — Pesquisa e Documentação
 
 **Integrante:** Vitor Kubica Silveira — RM: 573465
 
----
-
-## 1. O Problema
-
-O Brasil atravessa um crescimento acelerado da frota de veículos elétricos. Segundo a ABVE, foram emplacados 705.648 veículos eletrificados desde 2012 até março de 2026, com 2025 sendo o ano recorde (223.912 emplacamentos) e 2026 já superando esse ritmo com 83.947 unidades nos três primeiros meses. São Paulo lidera com 181.305 veículos eletrificados ativos.
-
-A infraestrutura de recarga, porém, não acompanha esse crescimento com a mesma capilaridade. Em setembro de 2025, o Brasil contava com 16.880 eletropostos públicos e semipúblicos — e a maior parte da demanda por recarga acontece em ambientes privados: condomínios, edifícios corporativos e campi universitários.
-
-Nesse contexto, a GoodWe mantém no campus da FIAP (Energy Innovation Lab — Unidade 2, Aclimação) um carregador HCA G2 instalado no estacionamento L1. O equipamento é real, gera dados a cada sessão e não possui hoje nenhum sistema que transforme esses dados em inteligência operacional: não há histórico por usuário, não há cálculo de consumo individual, não há rateio automatizado e não há interface de acompanhamento para o gestor do espaço.
-
-O EV ChargeOps propõe preencher exatamente essa lacuna: transformar cada sessão de recarga em um dado estruturado e, a partir daí, gerar rateio justo e inteligência acionável para gestores e usuários de infraestruturas de recarga compartilhada.
+> **Em uma frase:** o EV ChargeOps transforma o carregador HCA G2 de hardware isolado em produto de entrada que puxa a venda de inversor, bateria e software recorrente GoodWe — mostrando ao morador, em dois segundos, **de onde veio a energia do carro dele**.
 
 ---
 
-## 2. Frente 1 — Contexto e Problema
+## 1. O Problema e a Oportunidade
 
-### 2.1 Infraestruturas de recarga compartilhada
+### 1.1 Veículos elétricos crescendo, recarga privada sem gestão
 
-Uma infraestrutura de recarga compartilhada é um conjunto de um ou mais carregadores instalados em área comum ou de uso coletivo, acessados por múltiplos usuários que dividem tanto a infraestrutura física quanto, em geral, a fatura de energia elétrica associada.
+Segundo a ABVE, foram emplacados 705.648 veículos eletrificados desde 2012 até março de 2026, com 2025 sendo o ano recorde (223.912 emplacamentos) e 2026 já superando esse ritmo com 83.947 unidades nos três primeiros meses. São Paulo lidera com 181.305 veículos eletrificados ativos.
 
-Os desafios operacionais mais comuns enfrentados por gestores são:
+A maior parte da demanda por recarga acontece em ambientes privados — condomínios, edifícios corporativos e campi — e não em eletropostos públicos (16.880 públicos e semipúblicos em setembro de 2025).
 
-- **Ausência de medição individual:** a fatura de energia elétrica chega para o condomínio como um todo; sem sub-medição, é impossível saber quem consumiu o quê.
-- **Conflitos de agenda:** múltiplos usuários precisam de recarga ao mesmo tempo, mas há menos pontos do que veículos.
-- **Falta de visibilidade:** gestores não sabem se o carregador está em uso, com falha ou ocioso sem ir fisicamente até o equipamento.
-- **Cobrança manual e imprecisa:** sem automação, a cobrança se baseia em estimativas, gerando atritos entre moradores.
-- **Escalabilidade:** adicionar novos carregadores sem um sistema de gestão multiplica os problemas acima.
+### 1.2 A brecha: milhões de prédios com solar, quase nenhum com recarga integrada
 
-### 2.2 O que acontece em uma sessão de recarga
+- O Brasil tem **mais de 327 mil condomínios** e cerca de 39 milhões de moradores — um mercado que busca reduzir custo de energia, mas trava em assembleia para investir.
+- O país já soma **4,3 milhões de sistemas solares de geração distribuída**, 84% deles em residências.
+- A GoodWe acaba de firmar parceria no Brasil (RB Solar) para empurrar **inversores híbridos + armazenamento** como pacote completo, dentro de uma estratégia de Energy-as-a-Service.
 
-Do ponto de vista técnico, uma sessão de recarga passa pelas seguintes etapas:
+> Fontes: Cenário Energia (jul/2026) e TN Petróleo — ver seção 9. Os números são de terceiros e devem ser revalidados antes da apresentação final.
 
-1. **Conexão:** o usuário conecta o cabo ao veículo e ao carregador. O carregador detecta a presença do veículo via sinal de piloto (CP — Control Pilot), protocolo definido pela IEC 61851.
-2. **Autenticação:** em carregadores inteligentes (como o HCA G2), o usuário pode se autenticar via RFID, aplicativo (SEMS+) ou plug-and-charge.
-3. **Negociação de potência:** o carregador comunica ao veículo a corrente disponível; o veículo aceita ou solicita menos, dependendo do estado de carga de sua bateria.
-4. **Transferência de energia:** a energia flui do carregador para o veículo. O carregador monitora continuamente a potência entregue (kW) e integra o total em kWh.
-5. **Encerramento:** o usuário desconecta o cabo (ou solicita parada via app); o carregador registra fim da sessão, duração total e energia entregue.
+Ou seja: **muitos prédios já têm solar, mas quase nenhum tem um carregador de EV integrado a ela de forma inteligente.** O HCA G2 é a ponta desse ecossistema — porém hoje é vendido como item isolado, sem software que mostre por que vale comprar o pacote inteiro.
 
-Dados gerados por sessão: `timestamp_início`, `timestamp_fim`, `duração (min)`, `energia entregue (kWh)`, `potência média (kW)`, `potência de pico`, `usuário/token de autenticação`, `status de encerramento`.
+### 1.3 O caso real: o HCA G2 da FIAP
 
-### 2.3 Modelos de negócio para recarga compartilhada
+A GoodWe mantém no campus da FIAP (Energy Innovation Lab — Unidade 2, Aclimação) um carregador HCA G2 no estacionamento L1. O equipamento é real, gera dados a cada sessão e não possui hoje nenhum sistema que os transforme em inteligência: não há histórico por usuário, cálculo de consumo individual, rateio automatizado, nem interface para o gestor. Como o Energy Innovation Lab possui infraestrutura fotovoltaica GoodWe, o campus é o ambiente ideal para demonstrar o conceito completo.
+
+### 1.4 O que a GoodWe tem, o que falta, e o que o EV ChargeOps faz
+
+| O que a GoodWe tem | O que falta | O que o EV ChargeOps faz |
+|---|---|---|
+| Inversor solar + bateria + carregador | Software que conecte os três e mostre valor conjunto | Integra geração, bateria e sessão de recarga em um só painel |
+| Base instalada solar no país | Motivo para o prédio adicionar um carregador GoodWe | O carregador vira o "pretexto" para adotar o ecossistema completo |
+| Estratégia Energy-as-a-Service | Produto SaaS recorrente sobre o hardware | Assinatura/rateio do app gera receita mensal sobre carregador já vendido |
+| Dados de geração e consumo isolados por dispositivo | Visão unificada para evoluir produto e futura VPP | Cada sessão vira dado de comportamento para a GoodWe |
+
+**A brecha não é "mais um dashboard". É transformar o carregador no produto de entrada que puxa a venda do inversor e da bateria GoodWe.**
+
+### 1.5 Pitch em três camadas
+
+1. **Para o morador:** "Seu carro foi carregado pelo sol do seu prédio — e você economizou R$ X."
+2. **Para o condomínio:** "Rateio justo, sem briga, e um motivo claro para investir em solar + bateria."
+3. **Para a GoodWe:** "O carregador deixa de ser hardware isolado e vira a porta de entrada para vender inversor, bateria e SaaS recorrente."
+
+---
+
+## 2. A Solução: Fundação + Diferencial
+
+### 2.1 Fundação (backoffice obrigatório)
+
+- Cadastro de usuários e RFID
+- Registro de sessões via API SEMS
+- Cálculo de kWh individual
+- Rateio proporcional por kWh + demanda
+- Fluxo sessão → fatura
+- Painel do gestor e app do usuário
+- IA aplicada (anomalias, clustering, previsão)
+
+### 2.2 Diferencial: "De onde veio a energia do meu carro hoje?"
+
+Para cada sessão, o app exibe a origem da energia em um badge simples:
+
+| Origem | Exemplo exibido |
+|---|---|
+| 🟢 **Solar** | "17 kWh vieram do sol do seu prédio" |
+| 🔋 **Bateria** | "5 kWh vieram da bateria GoodWe" |
+| ⚡ **Rede** | "3 kWh vieram da rede (R$ X,XX)" |
+
+É uma feature **tátil**: o morador abre o app e vê, em 2 segundos, que o carro foi abastecido pelo sol e quanto economizou. Dos concorrentes mapeados (seção 3.4), nenhum apresenta isso de forma integrada.
+
+### 2.3 Por que isso vende para a GoodWe
+
+O badge **só funciona se o prédio tiver inversor + bateria GoodWe**. O app cria um argumento comercial direto:
+
+> "Quer que seus moradores vejam o carro sendo carregado pelo sol? Então adote o pacote GoodWe completo."
+
+Isso reforça a lógica de ecossistema que a GoodWe defende globalmente: conectar geração, armazenamento, carga e inteligência.
+
+### 2.4 Como a origem da energia é calculada
+
+O HCA G2 opera em três modos: **Fast** (rede + PV + bateria), **PV Priority** (excedente solar primeiro) e **PV + Battery Priority** (máximo aproveitamento local). Para estimar a origem de cada kWh:
+
+1. A cada ciclo de polling, o Collector lê o fluxo de potência da planta (geração PV, carga, bateria, rede) e a potência do carregador.
+2. Para cada intervalo `t` da sessão, a potência do carregador é atribuída às fontes em cascata, conforme o modo de carga configurado (ex.: PV Priority → solar disponível, depois bateria, depois rede).
+3. Os kWh por fonte são integrados ao longo da sessão e gravados em `session_energy_sources`.
+4. O custo evitado é `kWh_solar × tarifa_kWh` (e analogamente para bateria, descontada a política de uso).
+
+**Premissa a validar no piloto:** a atribuição é uma **estimativa por balanço de potência**, não uma medição física por elétron. A precisão depende da resolução temporal dos dados SEMS e da disponibilidade de leitura do inversor/medidor via API. Quando só há dados do carregador (sem inversor GoodWe), o badge não é exibido — comportamento intencional, pois é o gancho comercial da seção 2.3.
+
+---
+
+## 3. Contexto e Base de Mercado
+
+### 3.1 Infraestruturas de recarga compartilhada
+
+Conjunto de carregadores em área comum, acessados por múltiplos usuários que dividem a infraestrutura e, em geral, a fatura de energia. Desafios comuns:
+
+- **Ausência de medição individual:** a fatura chega ao condomínio como um todo.
+- **Conflitos de agenda:** mais veículos do que pontos de recarga.
+- **Falta de visibilidade:** o gestor não sabe se o carregador está em uso, com falha ou ocioso.
+- **Cobrança manual e imprecisa:** gera atrito entre moradores.
+- **Escalabilidade:** novos carregadores sem sistema de gestão multiplicam o problema.
+- **Falta de motivação para investir:** sem ver o retorno, o condomínio não aprova solar + bateria.
+
+### 3.2 O que acontece em uma sessão de recarga
+
+1. **Conexão:** o carregador detecta o veículo via Control Pilot (IEC 61851).
+2. **Autenticação:** RFID, app (SEMS+) ou plug-and-charge.
+3. **Negociação de potência:** o carregador informa a corrente disponível; o veículo aceita ou pede menos.
+4. **Transferência de energia:** o carregador mede kW e integra kWh.
+5. **Encerramento:** o carregador registra fim, duração e energia entregue.
+
+Dados por sessão: `timestamp_início`, `timestamp_fim`, `duração`, `energia (kWh)`, `potência média`, `potência de pico`, `token de autenticação`, `status de encerramento`.
+
+### 3.3 Modelos de negócio para recarga compartilhada
 
 | Modelo | Descrição | Adequado para |
 |---|---|---|
-| Gratuito | O custo vai para a conta comum do condomínio/empresa | Frotas corporativas pequenas |
-| Cobrança por kWh | Usuário paga pelo volume de energia consumida | Mais justo; exige sub-medição |
-| Cobrança por tempo | Tarifa por minuto conectado, independente do consumo | Simples, mas injusto |
-| Assinatura mensal | Taxa fixa mensal com limite de kWh | Previsibilidade para o gestor |
-| Rateio condominial | Custo dividido entre usuários pela proporção de uso | Campus/condomínios com CNPJ único |
+| Gratuito | Custo vai para a conta comum | Frotas corporativas pequenas |
+| Cobrança por kWh | Paga pelo volume consumido | Mais justo; exige sub-medição |
+| Cobrança por tempo | Tarifa por minuto conectado | Simples, mas injusto |
+| Assinatura mensal | Taxa fixa com limite de kWh | Previsibilidade para o gestor |
+| Rateio condominial | Custo dividido pela proporção de uso | Campus/condomínios com CNPJ único |
 
-### 2.4 Análise de mercado — Opção A
+### 3.4 Análise de concorrentes
 
-**Neocharge**
-A Neocharge é uma das principais players brasileiras, com foco em condomínios e frotas. Oferece plataforma de gestão com monitoramento em tempo real, relatórios de consumo, alertas de falha e controle de acesso via RFID e aplicativo. Seus carregadores suportam OCPP 1.6 e comunicação via Wi-Fi/4G. A limitação principal é que o modelo de rateio depende de integração manual com a administração do condomínio — não há geração automática de fatura por unidade.
+**Neocharge** — foco em condomínios e frotas; monitoramento em tempo real, relatórios, RFID/app, OCPP 1.6. Limitação: o rateio depende de integração manual com a administração; não gera fatura por unidade.
 
-**ChargePoint**
-Plataforma norte-americana com mais de 35 mil pontos de recarga gerenciados. Funcionalidades: autenticação por RFID ou app, relatórios detalhados por sessão, faturamento por kWh ou por tempo, integração com sistemas corporativos via API REST documentada. A limitação para o contexto brasileiro é o custo elevado de hardware e a ausência de suporte nativo a rateio condominial no modelo brasileiro.
+**ChargePoint** — mais de 35 mil pontos gerenciados; relatórios por sessão, faturamento por kWh/tempo, API REST. Limitação: custo alto de hardware e nenhum suporte ao rateio condominial brasileiro.
 
-**Zaptec**
-Solução norueguesa voltada para edifícios residenciais e corporativos. Destaque para o sistema de load balancing dinâmico entre múltiplos carregadores, que distribui automaticamente a capacidade disponível da rede elétrica entre os veículos em carga simultânea. O modelo de cobrança é por kWh medido individualmente, com faturamento direto ao usuário. Limitação: sem presença comercial estabelecida no Brasil.
+**Zaptec** — load balancing dinâmico para edifícios; cobrança por kWh individual. Limitação: sem presença comercial estabelecida no Brasil.
 
-**O que o EV ChargeOps precisa fazer diferente:** nenhuma das soluções analisadas oferece IA como componente ativo na geração de insights. Neocharge e ChargePoint geram relatórios históricos, mas não produzem previsões, detectam anomalias ou sugerem otimizações de agendamento. Além disso, o contexto de campus universitário com carregador GoodWe HCA G2 específico exige integração direta com a API SEMS, que nenhuma plataforma genérica endereça nativamente.
+**Ollem, VeVolt, Use Energia, Tupi** — players brasileiros mapeados na pesquisa da Sprint 01 (análise detalhada a incluir na Sprint 02). Nenhum apresenta a origem da energia (solar/bateria/rede) por sessão integrada ao rateio.
+
+**Diferencial do EV ChargeOps:** (1) origem da energia por sessão, ancorada no ecossistema GoodWe; (2) rateio automático por unidade; (3) IA como componente ativo (anomalias, perfis, previsão); (4) integração nativa com a API SEMS, que plataformas genéricas não endereçam.
 
 ---
 
-## 3. Frente 2 — Base Regulatória e Técnica
+## 4. Base Regulatória e Técnica
 
-### 3.1 Resolução Normativa ANEEL nº 1.000/2021
+### 4.1 Resolução Normativa ANEEL nº 1.000/2021
 
-A RN 1.000/2021 consolidou 61 normas anteriores da ANEEL, incluindo a RN 819/2018 (primeira regulamentação específica sobre recarga de veículos elétricos no Brasil). O Capítulo V trata exclusivamente das instalações de recarga.
+Consolidou 61 normas anteriores, incluindo a RN 819/2018 (primeira regulamentação de recarga de VE). O Capítulo V trata das instalações de recarga.
 
-Pontos centrais para o EV ChargeOps:
+- **Exploração comercial permitida:** preços livremente negociados (Art. 9º da RN 819/2018, mantido) — valida a cobrança por kWh.
+- **Comunicação prévia à distribuidora:** o Art. 550 exige comunicação quando a instalação altera o nível de tensão ou gera demanda significativa. Para um HCA G2 (máx. 22 kW) no campus, verificar com a Enel SP.
+- **Protocolos abertos:** exigidos para equipamentos não exclusivos de uso privado; o HCA G2 suporta OCPP 1.6.
+- **Vedação à injeção na rede:** V2G não é regulamentado no Brasil.
 
-- **Exploração comercial permitida:** qualquer interessado pode realizar atividades de recarga com preços livremente negociados (Art. 9º da RN 819/2018, mantido na RN 1.000). Isso valida o modelo de cobrança por kWh proposto pela plataforma.
-- **Comunicação prévia à distribuidora:** o Art. 550 da RN 1.000/2021 exige que toda instalação de estação de recarga seja comunicada previamente à distribuidora quando, individualmente ou em conjunto com outros equipamentos, resulte em alteração do nível de tensão ou demanda significativa. Para o campus da FIAP com um único HCA G2 (máx. 22 kW), isso implica verificação junto à Enel SP.
-- **Protocolos abertos:** a norma reforça a necessidade de protocolos abertos de comunicação para equipamentos não exclusivos de uso privado. O HCA G2 suporta OCPP 1.6, que atende a esse requisito.
-- **Vedação à injeção na rede:** é vedada a injeção de energia elétrica proveniente do veículo na rede de distribuição (V2G não regulamentado no Brasil).
+### 4.2 Carregador GoodWe HCA G2 — Interfaces
 
-### 3.2 Carregador GoodWe HCA G2 — Interfaces e capacidades
+- **RS-485:** comunicação com inversores fotovoltaicos GoodWe e medidores MID — base para ler o fluxo solar/bateria.
+- **LAN (Ethernet):** conexão cabeada estável.
+- **Wi-Fi:** comunicação com roteador e, via internet, com o SEMS.
+- **Bluetooth:** configuração inicial via SolarGo; irrelevante para integração contínua.
+- **RFID:** identifica o usuário sem necessidade de app.
 
-O HCA G2 é o carregador instalado no estacionamento L1 da FIAP. Suas interfaces de comunicação são:
+Modos de carga: Fast, PV Priority, PV + Battery Priority.
 
-**RS-485:** protocolo serial usado para comunicação com inversores fotovoltaicos GoodWe e com medidores MID (Mid Interval Data). Permite integração local para troca de dados de potência e estado de carga. Útil para ambientes com infraestrutura PV instalada (caso do Energy Innovation Lab).
+### 4.3 API GoodWe SEMS — Exploração
 
-**LAN (Ethernet):** conexão cabeada com o roteador local. Oferece comunicação mais estável que Wi-Fi para ambientes de campus onde a qualidade do sinal wireless pode variar.
+Acesso via SEMS Portal (semsportal.com / semsplus.goodwe.com). Não há documentação pública completa; a API foi mapeada pela comunidade (Home Assistant, Node-RED).
 
-**Wi-Fi:** conexão sem fio para comunicação com o roteador e, via internet, com a plataforma SEMS. Adequado para instalações onde cabeamento não é viável.
-
-**Bluetooth:** usado para configuração inicial via aplicativo SolarGo durante o comissionamento. Não é relevante para integração contínua com a plataforma.
-
-**RFID:** suporte a cartões de autenticação para controle de acesso. Cada cartão identifica um usuário, permitindo associar sessões a pessoas sem necessidade de aplicativo.
-
-O carregador suporta três modos de carga configuráveis: Fast (prioridade na velocidade, usa rede + PV + bateria), PV Priority (usa primeiro energia solar excedente) e PV + Battery Priority (máximo aproveitamento da geração local).
-
-### 3.3 API GoodWe SEMS — Exploração — Opção B
-
-A GoodWe disponibiliza acesso à sua API via SEMS Portal (semsportal.com / semsplus.goodwe.com). Não existe documentação pública completa, mas a API foi amplamente mapeada pela comunidade de desenvolvedores (projetos open-source para Home Assistant, Node-RED, etc.).
-
-**Autenticação:** a API utiliza token JWT obtido via endpoint de CrossLogin:
+**Autenticação:** token via CrossLogin.
 
 ```
 POST https://www.semsportal.com/api/v1/Common/CrossLogin
@@ -111,26 +175,17 @@ Header: Token: {"version":"v2.1.0","client":"ios","language":"en"}
 Body: {"account": "<email>", "pwd": "<senha>"}
 ```
 
-O token retornado deve ser incluído (em Base64) no header de todas as requisições subsequentes.
+O token retornado vai (em Base64) no header das requisições seguintes.
 
 **Endpoints identificados para o EV Charger:**
 
 ```
 GET https://semsportal.com/powerstation/EvChargerDetail?stationId={station_id}
-```
-Retorna status atual do carregador, incluindo campos: `evChargerStatus`, `power` (kW em tempo real), dados da sessão ativa.
-
-```
 GET https://www.semsportal.com/api/v3/EvCharger/GetCurrentChargeinfo
-```
-Informações da sessão de carga em andamento: usuário, energia entregue até o momento, tempo de sessão.
-
-```
 GET https://eu.semsportal.com/api/v4/EvCharger/GetEvChargerMoreView
 ```
-Endpoint mais detalhado disponível na versão v4 da API, com dados históricos e de configuração.
 
-**Estrutura de resposta (JSON):**
+**Estrutura de resposta (exemplo):**
 ```json
 {
   "hasError": false,
@@ -146,61 +201,53 @@ Endpoint mais detalhado disponível na versão v4 da API, com dados históricos 
 }
 ```
 
-**Limitação crítica:** a documentação oficial da GoodWe para a API é restrita a contas organizacionais SEMS (Open API) ou a parceiros com acordo de licenciamento (Real-time Data API). Para o escopo do projeto, a integração será via conta SEMS vinculada ao equipamento da FIAP, com scraping da API não documentada como fallback para prototipação.
+**Para a origem da energia (a explorar na Sprint 02):** além dos endpoints do carregador, será necessário ler o fluxo de potência da planta (geração PV, carga, bateria, rede) pelos endpoints de detalhe da usina SEMS. Essa leitura ainda **não foi validada** no equipamento da FIAP e é o principal risco técnico do diferencial.
 
-### 3.4 APIs Complementares — Opção C
+**Limitação crítica:** a documentação oficial é restrita a contas organizacionais SEMS (Open API) ou parceiros licenciados. O piloto usará a conta SEMS vinculada ao equipamento da FIAP, com a API não documentada como fallback de prototipação.
 
-**Open Charge Map API**
-REST API pública que fornece dados de mais de 45.000 estações de recarga em todo o mundo, incluindo Brasil. Útil para enriquecer a plataforma com contexto geográfico (densidade de eletropostos na região do usuário) e para comparação de tarifas.
+### 4.4 APIs complementares
 
-Endpoint principal: `GET https://api.openchargemap.io/v3/poi/?output=json&countrycode=BR&maxresults=100`
-Retorna: localização, operador, tipo de conector, potência, status de operação.
-
-**ANEEL Open Data**
-Portal `dadosabertos.aneel.gov.br` disponibiliza datasets sobre concessões de distribuição, tarifas por distribuidora e informações sobre outorgas. Relevante para calcular o custo do kWh da distribuidora local (Enel SP) e atualizar automaticamente a tarifa base do rateio.
-
-Endpoint de tarifas: disponível via CKAN API do portal de dados abertos do governo federal.
+- **Open Charge Map:** `GET https://api.openchargemap.io/v3/poi/?output=json&countrycode=BR&maxresults=100` — contexto geográfico e comparação de tarifas.
+- **ANEEL Open Data:** `dadosabertos.aneel.gov.br` — tarifas por distribuidora (Enel SP) via CKAN, para atualizar a tarifa base do rateio e o valor da economia solar.
 
 ---
 
-## 4. Frente 3 — Arquitetura e IA
+## 5. Arquitetura e IA
 
-### 4.1 Camadas da plataforma
+### 5.1 Camadas
 
-**Camada Física**
-O carregador GoodWe HCA G2 instalado no estacionamento L1 da FIAP. É o ponto de captura de dados: gera eventos de início/fim de sessão, leituras de potência a cada intervalo e registros de autenticação RFID.
+**Camada Física** — HCA G2 (e, onde existir, inversor/bateria GoodWe) no estacionamento L1. Gera eventos de sessão, leituras de potência e autenticação RFID.
 
-**Camada de Conectividade**
-O HCA G2 conecta-se via LAN/Wi-Fi ao roteador do campus e de lá à internet, reportando dados ao SEMS Portal da GoodWe. A plataforma EV ChargeOps acessa esses dados via API SEMS (polling a cada intervalo configurável). Como protocolo alternativo local, o OCPP 1.6 permite integração direta sem depender da nuvem GoodWe.
+**Camada de Conectividade** — LAN/Wi-Fi até o SEMS Portal. O EV ChargeOps acessa via API SEMS (polling configurável). OCPP 1.6 é alternativa local, sem depender da nuvem GoodWe.
 
-**Camada de Aplicação (Back-end)**
-Serviço Node.js responsável por: coletar dados da API SEMS, enriquecer e persistir sessões no banco de dados, executar o modelo de rateio ao fim de cada ciclo (mensal), acionar os módulos de IA para análise e previsão, e disponibilizar uma API REST para o front-end.
+**Camada de Aplicação (Back-end)** — Node.js: coleta SEMS (carregador **e fluxo de energia da planta**), persiste sessões, **atribui a origem da energia por sessão**, executa o rateio mensal, aciona a IA, expõe API REST.
 
-**Camada de IA**
-Módulo independente (Python/FastAPI ou integrado ao Node.js via biblioteca) responsável por detecção de anomalias, clustering de perfis de uso e previsão de demanda. Detalhado na seção 4.3.
+**Camada de IA** — módulo Python independente (anomalias, clustering, previsão).
 
 **Camada de Apresentação**
-Dois painéis distintos:
-- **Painel do gestor:** visão agregada de todas as sessões, consumo total por período, alertas de anomalia, fatura consolidada por usuário, indicadores de uso (taxa de ocupação, pico, ociosidade).
-- **App do usuário:** histórico de sessões individuais, fatura do mês, agendamento de recarga, notificações de início/fim de sessão.
+- **Painel do gestor:** sessões, consumo por período, alertas, fatura por usuário, indicadores de uso e **percentual solar/bateria/rede do prédio**.
+- **App do usuário:** histórico, fatura, agendamento, notificações e **badge de origem da energia por sessão**.
 
-### 4.2 Fluxo de dados — da sessão à fatura
+### 5.2 Fluxo de dados — da sessão à fatura
 
 ```
 [Veículo conectado]
         |
         v
-[HCA G2 registra início de sessão]
-        |
-        v
+[HCA G2 registra sessão] ---- [Inversor/bateria GoodWe registram fluxo de potência]
+        |                                   |
+        v                                   v
 [SEMS Portal recebe dados via LAN/Wi-Fi]
         |
         v
 [EV ChargeOps coleta via API SEMS (polling 60s)]
         |
         v
-[Persistência no banco: tabela sessions]
-    campos: user_id, start_at, end_at, energy_kwh, peak_power_kw
+[Persistência: sessions + plant_power_samples]
+        |
+        v
+[Atribuição de origem por sessão]
+    solar_kwh + battery_kwh + grid_kwh = energy_kwh
         |
         v
 [Fim do ciclo mensal]
@@ -213,55 +260,23 @@ Dois painéis distintos:
 [Módulo IA analisa padrões e anomalias]
         |
         v
-[Fatura gerada e disponibilizada no app]
+[Fatura + economia solar disponíveis no app]
         |
         v
 [Gestor aprova e envia para cobrança]
 ```
 
-### 4.3 Papel da IA na solução — Opção B
+### 5.3 Papel da IA
 
-A IA no EV ChargeOps não é decorativa. Ela opera em três frentes concretas, cada uma com problema definido, técnica aplicável e dados necessários:
+**IA 1 — Detecção de anomalias.** Sessões de duração atípica, consumo incompatível ou interrupções anormais indicam falha, uso indevido ou erro de medição. Técnica: Isolation Forest (ou LSTM Autoencoder). Dados: histórico de sessões (mín. 30 dias). Também sinaliza inconsistência entre soma das fontes e `energy_kwh`, que invalida o badge de origem.
 
-**IA 1 — Detecção de anomalias em sessões**
+**IA 2 — Clustering de perfis de uso.** K-Means ou DBSCAN sobre features por usuário (horário, duração, frequência, energia média). Dados: mín. 60 dias. Gera perfis como "noturno intensivo" ou "recarga rápida esporádica" — e identifica quem poderia migrar para horário de sol, aumentando a fração solar.
 
-Problema: sessões com duração atípica, consumo incompatível com o veículo do usuário ou eventos de interrupção anormal podem indicar falha no equipamento, uso indevido ou erro de medição — tudo isso impacta diretamente o rateio.
+**IA 3 — Previsão de demanda e de oferta solar.** Regressão com features temporais ou Prophet. Previsão de ocupação para 7 dias com intervalo de confiança; cruzada com previsão de geração, sugere janelas de recarga com mais energia solar.
 
-Técnica: Isolation Forest ou LSTM Autoencoder para detecção de outliers em séries temporais de sessão (duração, kWh/hora, potência).
+### 5.4 Modelo de rateio
 
-Dados necessários: histórico de sessões do usuário (mínimo 30 dias para calibração), especificações técnicas do veículo (capacidade de bateria, aceitação máxima de corrente).
-
-Impacto esperado: redução de erros de faturamento por sessões corrompidas; alertas automáticos para manutenção preventiva do carregador.
-
-**IA 2 — Clustering de perfis de uso**
-
-Problema: gestores precisam entender como diferentes usuários utilizam a infraestrutura para dimensionar expansões, definir políticas de agendamento e comunicar de forma personalizada.
-
-Técnica: K-Means ou DBSCAN sobre vetores de features por usuário (horário preferencial, duração média de sessão, frequência semanal, energia média por sessão).
-
-Dados necessários: histórico de sessões por usuário (mínimo 60 dias).
-
-Impacto esperado: segmentação automática em perfis (ex: "carregador noturno intensivo", "recarga rápida esporádica", "uso em horário de pico") que informam políticas de preço e agendamento.
-
-**IA 3 — Previsão de demanda**
-
-Problema: o gestor precisa saber antecipadamente quando o carregador estará saturado para planejar expansão ou redistribuir demanda.
-
-Técnica: Regressão com features temporais (dia da semana, feriados, sazonalidade) ou Prophet (modelo de série temporal do Facebook, adequado a dados com padrões semanais).
-
-Dados necessários: histórico de sessões com timestamps, calendário acadêmico da FIAP, dados climáticos (opcional, para correlação com uso).
-
-Impacto esperado: previsão de ocupação para os próximos 7 dias com intervalo de confiança, permitindo comunicação proativa ao gestor quando saturação for provável.
-
-### 4.4 Modelo de rateio proposto — Opção A
-
-Após análise de dois modelos praticados por condomínios que já adotaram carregadores compartilhados, a equipe optou pelo **rateio proporcional por kWh com componente de demanda**.
-
-**Modelo A — Rateio igualitário (rejeitado):** divide o custo total de energia do mês igualmente entre todos os usuários ativos, independente do consumo individual. Vantagem: extremamente simples. Desvantagem: profundamente injusto — um usuário que carregou 5 kWh paga o mesmo que quem carregou 80 kWh.
-
-**Modelo B — Rateio proporcional por kWh (adotado):** cada usuário paga proporcionalmente ao volume de energia que consumiu no mês, mais uma parcela fixa correspondente à demanda de pico que gerou na rede do condomínio.
-
-**Fórmula:**
+Foi adotado o **rateio proporcional por kWh com componente de demanda**, em vez do igualitário (injusto: quem carregou 5 kWh pagaria o mesmo que quem carregou 80 kWh).
 
 ```
 Fatura_usuário = (energy_kwh_usuário / energy_kwh_total) × custo_energia_mês
@@ -269,73 +284,90 @@ Fatura_usuário = (energy_kwh_usuário / energy_kwh_total) × custo_energia_mês
               + taxa_fixa_plataforma
 ```
 
-**Variáveis:**
-- `energy_kwh_usuário`: soma da energia consumida pelo usuário no mês (extraída das sessões)
-- `energy_kwh_total`: soma de todos os usuários no mesmo ciclo
-- `custo_energia_mês`: valor da fatura de energia elétrica do período
-- `peak_kw_usuário`: maior valor de potência instantânea registrado pelo usuário no mês
-- `peak_kw_total`: soma dos picos individuais (proxy para contribuição na demanda máxima)
-- `custo_demanda_mês`: parcela de demanda da fatura (quando aplicável na tarifa)
-- `taxa_fixa_plataforma`: custo de operação da plataforma, dividido pelo número de usuários ativos
+- `energy_kwh_usuário`: energia consumida pelo usuário no mês
+- `energy_kwh_total`: soma de todos os usuários no ciclo
+- `custo_energia_mês`: custo da energia do período (**neste modelo, apenas a parcela vinda da rede e da bateria; ver abaixo**)
+- `peak_kw_usuário` / `peak_kw_total`: pico individual e soma dos picos (proxy de contribuição na demanda)
+- `custo_demanda_mês`: parcela de demanda da fatura, quando aplicável
+- `taxa_fixa_plataforma`: custo da plataforma dividido entre usuários ativos
+
+**Efeito da origem da energia no rateio (proposta, a validar com o condomínio):** a energia solar tem custo marginal próximo de zero. A decisão de repassar ou não essa economia ao morador é uma política do condomínio. A plataforma suporta duas configurações: (a) tarifa única por kWh; (b) tarifa diferenciada por origem (`tarifa_solar`, `tarifa_bateria`, `tarifa_rede`). A segunda é o que torna a economia visível e atrativa para o morador.
 
 **Casos excepcionais:**
-- **Sessão interrompida:** sessões com status `interrupted` são incluídas no rateio normalmente pelo kWh efetivamente entregue até a interrupção.
-- **Usuário sem recarga no mês:** não aparece na fatura; não paga taxa variável. A taxa fixa é cobrada apenas de usuários com ao menos uma sessão no mês.
-- **Dois veículos da mesma unidade:** cada veículo tem RFID próprio e é tratado como usuário distinto. A fatura da unidade é a soma das faturas dos dois tokens.
+- Sessão `interrupted`: entra no rateio pelo kWh efetivamente entregue.
+- Usuário sem recarga no mês: não aparece na fatura nem paga taxa fixa.
+- Dois veículos da mesma unidade: cada RFID é um usuário; a fatura da unidade soma os dois.
 
-### 4.5 Esquema da base de dados — Opção C
+### 5.5 Esquema do banco de dados
 
-**Entidade: users**
 ```sql
 CREATE TABLE users (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name        TEXT NOT NULL,
   email       TEXT UNIQUE NOT NULL,
   unit        TEXT,              -- ex: "Bloco A - Vaga 12" ou "FIAP - Sala 201"
-  rfid_token  TEXT UNIQUE,       -- token do cartão RFID
+  rfid_token  TEXT UNIQUE,
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
-```
 
-**Entidade: sessions**
-```sql
 CREATE TABLE sessions (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id         UUID REFERENCES users(id),
   charger_id      TEXT NOT NULL,          -- serial number do HCA G2
   start_at        TIMESTAMPTZ NOT NULL,
   end_at          TIMESTAMPTZ,
-  energy_kwh      NUMERIC(8,3),           -- kWh entregues
-  peak_power_kw   NUMERIC(6,3),           -- potência de pico na sessão
+  energy_kwh      NUMERIC(8,3),
+  peak_power_kw   NUMERIC(6,3),
   avg_power_kw    NUMERIC(6,3),
+  charge_mode     TEXT,                   -- fast | pv_priority | pv_battery_priority
   status          TEXT DEFAULT 'completed', -- completed | interrupted | error
-  raw_sems_data   JSONB                   -- payload bruto da API para auditoria
+  raw_sems_data   JSONB
 );
-```
 
-**Entidade: billing_cycles**
-```sql
+-- NOVO: amostras de fluxo de potência da planta (geração, bateria, rede)
+CREATE TABLE plant_power_samples (
+  id              BIGSERIAL PRIMARY KEY,
+  station_id      TEXT NOT NULL,
+  sampled_at      TIMESTAMPTZ NOT NULL,
+  pv_power_kw     NUMERIC(8,3),
+  battery_power_kw NUMERIC(8,3),          -- + descarga | - carga
+  grid_power_kw   NUMERIC(8,3),           -- + importação | - exportação
+  load_power_kw   NUMERIC(8,3),
+  charger_power_kw NUMERIC(8,3)
+);
+
+-- NOVO: origem da energia de cada sessão (alimenta o badge)
+CREATE TABLE session_energy_sources (
+  session_id      UUID PRIMARY KEY REFERENCES sessions(id),
+  solar_kwh       NUMERIC(8,3) NOT NULL DEFAULT 0,
+  battery_kwh     NUMERIC(8,3) NOT NULL DEFAULT 0,
+  grid_kwh        NUMERIC(8,3) NOT NULL DEFAULT 0,
+  grid_cost_brl   NUMERIC(8,2),
+  savings_brl     NUMERIC(8,2),           -- economia vs. 100% rede
+  method          TEXT DEFAULT 'power_balance', -- método de atribuição
+  computed_at     TIMESTAMPTZ DEFAULT NOW()
+);
+
 CREATE TABLE billing_cycles (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   period_start    DATE NOT NULL,
   period_end      DATE NOT NULL,
   total_kwh       NUMERIC(10,3),
   total_cost_brl  NUMERIC(10,2),
-  tariff_kwh      NUMERIC(6,4),           -- R$/kWh no período
+  tariff_kwh      NUMERIC(6,4),
   status          TEXT DEFAULT 'open'     -- open | closed | paid
 );
-```
 
-**Entidade: invoices**
-```sql
 CREATE TABLE invoices (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   cycle_id        UUID REFERENCES billing_cycles(id),
   user_id         UUID REFERENCES users(id),
   energy_kwh      NUMERIC(8,3),
+  solar_kwh       NUMERIC(8,3),           -- NOVO
   energy_cost_brl NUMERIC(8,2),
   demand_cost_brl NUMERIC(8,2),
   platform_fee    NUMERIC(6,2),
+  savings_brl     NUMERIC(8,2),           -- NOVO
   total_brl       NUMERIC(8,2),
   generated_at    TIMESTAMPTZ DEFAULT NOW(),
   status          TEXT DEFAULT 'pending'  -- pending | sent | paid
@@ -344,137 +376,142 @@ CREATE TABLE invoices (
 
 **Registros simulados:**
 ```json
-// Sessão completa
+// Sessão com origem da energia
 {
-  "id": "a1b2c3d4-...",
+  "session_id": "a1b2c3d4-...",
   "user_id": "u001",
   "charger_id": "GW22K-HCA-20-BR001",
-  "start_at": "2026-06-10T22:15:00Z",
-  "end_at": "2026-06-11T01:45:00Z",
-  "energy_kwh": 28.4,
-  "peak_power_kw": 22.0,
-  "avg_power_kw": 8.1,
+  "start_at": "2026-06-10T10:15:00Z",
+  "end_at": "2026-06-10T13:45:00Z",
+  "energy_kwh": 25.0,
+  "charge_mode": "pv_battery_priority",
+  "sources": { "solar_kwh": 17.0, "battery_kwh": 5.0, "grid_kwh": 3.0 },
   "status": "completed"
 }
 
-// Fatura do mês
+// Mensagem exibida no app
 {
-  "cycle": "2026-06",
-  "user": "João Silva",
-  "energy_kwh": 142.7,
-  "energy_cost_brl": 142.70,
-  "demand_cost_brl": 18.50,
-  "platform_fee": 5.00,
-  "total_brl": 166.20
+  "headline": "17 kWh vieram do sol do seu prédio",
+  "battery": "5 kWh vieram da bateria GoodWe",
+  "grid": "3 kWh vieram da rede",
+  "savings_brl": "valor calculado a partir da tarifa vigente"
 }
 ```
 
 ---
 
-## 5. Diagrama de Arquitetura
+## 6. Diagrama de Arquitetura
 
-OBS:  A Imagem em png está no repositório
+A imagem em PNG está no repositório: `Diagrama arquitetura.png` (a atualizar com a leitura de fluxo da planta e o módulo de atribuição de origem).
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CAMADA FÍSICA                            │
-│              GoodWe HCA G2 (FIAP — Estacionamento L1)           │
-│         RS-485 | LAN | Wi-Fi | RFID | Bluetooth                 │
+│   HCA G2  +  Inversor híbrido GoodWe  +  Bateria GoodWe         │
+│        RS-485 | LAN | Wi-Fi | RFID | Bluetooth                  │
 └───────────────────────────┬─────────────────────────────────────┘
                             │ LAN / Wi-Fi
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    CAMADA DE CONECTIVIDADE                       │
 │                  GoodWe SEMS Portal (nuvem)                     │
-│     semsportal.com — API v3/v4 — JSON sobre HTTPS               │
 └───────────────────────────┬─────────────────────────────────────┘
                             │ REST API (polling 60s)
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    CAMADA DE APLICAÇÃO                           │
-│                                                                 │
 │  ┌─────────────────┐    ┌──────────────────────────────────┐   │
 │  │  Collector      │    │        API REST (Node.js)         │   │
-│  │  (Node.js)      │───▶│  /sessions  /invoices  /users    │   │
-│  │  Polling SEMS   │    │  /analytics  /billing             │   │
+│  │  sessões +      │───▶│  /sessions /invoices /users       │   │
+│  │  fluxo planta   │    │  /analytics /billing /sources     │   │
 │  └────────┬────────┘    └──────────────────────────────────┘   │
-│           │                              │                      │
-│           ▼                              ▼                      │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │              PostgreSQL (Supabase / Fly.io)               │  │
-│  │   users | sessions | billing_cycles | invoices            │  │
-│  └──────────────────────────────────────────────────────────┘  │
-│           │                                                     │
 │           ▼                                                     │
 │  ┌─────────────────┐                                           │
-│  │  Módulo IA      │                                           │
-│  │  (Python)       │                                           │
-│  │  • Anomalias    │                                           │
-│  │  • Clustering   │                                           │
-│  │  • Previsão     │                                           │
+│  │ Atribuição de   │  solar / bateria / rede por sessão        │
+│  │ origem (NOVO)   │                                           │
+│  └────────┬────────┘                                           │
+│           ▼                                                     │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │              PostgreSQL (Supabase)                        │  │
+│  │ users|sessions|plant_power_samples|session_energy_sources │  │
+│  │ billing_cycles|invoices                                   │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│           ▼                                                     │
+│  ┌─────────────────┐                                           │
+│  │  Módulo IA      │  Anomalias | Clustering | Previsão        │
 │  └─────────────────┘                                           │
 └───────────────────────────┬─────────────────────────────────────┘
-                            │
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                   CAMADA DE APRESENTAÇÃO                         │
-│                                                                 │
 │   ┌─────────────────────┐    ┌─────────────────────────────┐   │
 │   │   Painel do Gestor  │    │      App do Usuário          │   │
 │   │   (React / Next.js) │    │   (React Native / Expo)      │   │
-│   │   Dashboard global  │    │   Histórico + Fatura         │   │
-│   │   Alertas e IA      │    │   Agendamento                │   │
+│   │   % solar do prédio │    │   Badge: sol / bateria / rede│   │
 │   └─────────────────────┘    └─────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 6. Plano para a Sprint 02
-
-A sprint 02 será desenvolvida em três fases, nessa ordem:
+## 7. Plano para a Sprint 02
 
 **Fase 1 — Infraestrutura e coleta (semanas 1–2)**
-- Configurar banco de dados PostgreSQL (Supabase) com o esquema definido
-- Implementar o Collector: serviço Node.js que autentica na API SEMS, faz polling a cada 60 segundos e persiste sessões
-- Criar endpoints REST básicos: `GET /sessions`, `GET /users`, `POST /sessions`
-- Testes de integração com o HCA G2 real da FIAP
+- Banco PostgreSQL (Supabase) com o esquema da seção 5.5
+- Collector: autentica no SEMS, faz polling de 60s e persiste sessões
+- **Validar quais endpoints SEMS expõem o fluxo de potência da planta (PV, bateria, rede)** — risco principal do diferencial
+- Endpoints básicos: `GET /sessions`, `GET /users`, `POST /sessions`
 
-**Fase 2 — Motor de rateio e back-end (semanas 3–5)**
-- Implementar o motor de rateio: RPC ou job agendado que calcula faturas ao fechar um ciclo
-- Endpoints de billing: `GET /billing-cycles`, `POST /billing-cycles/:id/close`, `GET /invoices/:user_id`
-- Interface do gestor: painel web com React/Next.js mostrando sessões do dia, consumo acumulado e status do carregador
+**Fase 2 — Rateio, origem da energia e back-end (semanas 3–5)**
+- Motor de rateio (job agendado/RPC) e endpoints de billing
+- **Algoritmo de atribuição solar/bateria/rede** por balanço de potência, com testes sobre dados simulados e reais
+- Painel do gestor: sessões do dia, consumo, status do carregador, % solar
 
-**Fase 3 — IA e apresentação final (semanas 6–10)**
-- Implementar detecção de anomalias com Isolation Forest (sklearn) sobre o histórico de sessões
-- Implementar clustering de perfis de uso com K-Means
-- Interface do usuário: tela de histórico, fatura do mês, notificações push
-- Integração dos insights de IA no painel do gestor
-- Preparação do vídeo pitch
+**Fase 3 — IA, app e pitch (semanas 6–10)**
+- Isolation Forest (anomalias) e K-Means (perfis)
+- **App do usuário com o badge "De onde veio a energia do meu carro?"**, histórico e fatura
+- Integração dos insights de IA no painel
+- Vídeo pitch com demonstração do badge no HCA G2 da FIAP
 
-**Stack tecnológico:**
+**Plano B:** se a API SEMS não expuser o fluxo da planta com resolução suficiente, a Sprint 02 demonstra o badge com dados simulados de planta sobre sessões reais, documentando claramente a limitação.
+
+**Stack:**
 - Back-end: Node.js + TypeScript + Fastify
-- Banco de dados: PostgreSQL (Supabase) com pgvector para embeddings futuros
+- Banco: PostgreSQL (Supabase)
 - IA: Python + scikit-learn + Prophet
 - Front-end gestor: React + Next.js
 - App usuário: React Native + Expo
 - Deploy: Fly.io (back-end e IA) + Vercel (front-end)
-- Observabilidade: Datadog para logs e métricas do Collector
+- Observabilidade: Datadog para o Collector
 
 ---
 
-## 7. Fontes Consultadas
+## 8. Riscos e Premissas
 
-- ABVE. Dados de emplacamentos de veículos eletrificados no Brasil 2025–2026. Disponível em: abve.org.br
-- Canal VE. Frota de eletrificados no Brasil ultrapassa 700 mil unidades. Abril/2026. Disponível em: canalve.com.br
-- Reconecta News. Veículos eletrificados no Brasil podem chegar a 300 mil vendas em 2026. Março/2026.
-- ANEEL. Resolução Normativa nº 1.000, de 7 de dezembro de 2021. Disponível em: gov.br/aneel
-- ANEEL. Da instalação de estação de recarga (RN 819/2018 — texto mantido na RN 1.000). Disponível em: aneel.gov.br
-- GoodWe. HCA G2 Series EV Charger — Datasheet e User Manual V1.5, 2025. Disponível em: goodwe.com
-- GoodWe. API Technical Document (SA-E-20221031-001). Disponível em: community.goodwe.com
+| Risco / premissa | Mitigação |
+|---|---|
+| API SEMS não documentada e restrita a contas organizacionais | Conta SEMS da FIAP; fallback de prototipação; contato com a GoodWe para Open API |
+| Fluxo da planta pode não estar disponível via API na resolução necessária | Plano B com dados simulados, deixando explícito na demonstração |
+| Origem da energia é estimativa por balanço de potência | Documentar o método (`method`) e exibir como "estimado" quando aplicável |
+| Dados de mercado (327 mil condomínios, 4,3 M de sistemas) vêm de reportagens | Revalidar com fontes primárias (ABSOLAR, ANEEL) antes da apresentação |
+| Diferencial só se aplica a prédios com inversor/bateria GoodWe | É intencional: é o gancho comercial para a GoodWe |
+
+---
+
+## 9. Fontes Consultadas
+
+- ABVE. Dados de emplacamentos de veículos eletrificados no Brasil 2025–2026. abve.org.br
+- Canal VE. Frota de eletrificados no Brasil ultrapassa 700 mil unidades. Abr/2026.
+- Reconecta News. Veículos eletrificados no Brasil podem chegar a 300 mil vendas em 2026. Mar/2026.
+- Cenário Energia. Condomínios atraem fundos de private equity para consolidação da energia solar. Jul/2026. cenarioenergia.com.br
+- TN Petróleo. GoodWe e RB Solar anunciam parceria estratégica para acelerar a transformação energética no Brasil. tnpetroleo.com.br
+- ANEEL. Resolução Normativa nº 1.000/2021. gov.br/aneel
+- ANEEL. Da instalação de estação de recarga (RN 819/2018). aneel.gov.br
+- GoodWe. HCA G2 Series EV Charger — Datasheet e User Manual V1.5, 2025. goodwe.com
+- GoodWe. API Technical Document (SA-E-20221031-001). community.goodwe.com
 - Karunanayake, B. Accessing GoodWe SEMS Portal API: A Comprehensive Guide. Medium, 2024.
-- GitHub: TimSoethout/goodwe-sems-home-assistant — discussão sobre endpoints da API EV Charger.
-- NeoCharge. Plataforma de Gestão de Recarga. Disponível em: neocharge.com.br
-- Energisa. NDU 042 — Fornecimento de energia para estações de recarga de veículo elétrico. Fev/2025.
-- Open Charge Map API. Documentação REST. Disponível em: openchargemap.org/site/develop
-- VoltBras. Legislação brasileira sobre eletropostos: o que saber antes de investir. Fev/2026.
+- GitHub: TimSoethout/goodwe-sems-home-assistant — endpoints da API EV Charger.
+- NeoCharge. Plataforma de Gestão de Recarga. neocharge.com.br
+- Energisa. NDU 042 — Fornecimento de energia para estações de recarga de VE. Fev/2025.
+- Open Charge Map API. openchargemap.org/site/develop
+- VoltBras. Legislação brasileira sobre eletropostos. Fev/2026.
