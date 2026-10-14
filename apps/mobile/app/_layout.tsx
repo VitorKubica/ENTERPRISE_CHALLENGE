@@ -32,6 +32,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="recarga/[id]" options={{ title: 'Sua recarga' }} />
       </Stack>
     </SafeAreaProvider>
   );
