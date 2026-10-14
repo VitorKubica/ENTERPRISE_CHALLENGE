@@ -156,7 +156,7 @@ Comparação com o que foi entregue na Sprint 01 (README original do repositóri
 
 ## 9. Evidências de funcionamento
 
-Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Elas também estão na aba **Evidências** do app, e os arquivos ficam em `apps/mobile/assets/evidencias/`.
+Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Elas também estão na aba **Evidências** do app, e os arquivos ficam em `Evidencias/`.
 
 - 25 capturas, do QR code ao painel do gestor.
 - 19 testes automatizados passando (`npm test`) e build e typecheck dos 3 pacotes sem erros (`npm run typecheck`).
@@ -165,15 +165,15 @@ Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Ela
 
 <table>
 <tr>
-<td valign="top" width="50%"><b>Início: leitor de QR no topo</b><br><sub>Leitor de QR code e a economia do morador. O simulador não tem câmera, então o app avisa; em celular a leitura é real.</sub><br><img src="apps/mobile/assets/evidencias/01-inicio-leitor-qr.png" width="260" alt="Início: leitor de QR no topo"></td>
-<td valign="top" width="50%"><b>Dica do morador (IA 2 e IA 3)</b><br><sub>O perfil de uso do morador (K-Means) e a previsão de ocupação de amanhã viram uma dica: "Carrega com o sol" e a melhor hora para carregar.</sub><br><img src="apps/mobile/assets/evidencias/02-inicio-dica-perfil-previsao.png" width="260" alt="Dica do morador (IA 2 e IA 3)"></td>
+<td valign="top" width="50%"><b>Início: leitor de QR no topo</b><br><sub>Leitor de QR code e a economia do morador. O simulador não tem câmera, então o app avisa; em celular a leitura é real.</sub><br><img src="Evidencias/01-inicio-leitor-qr.png" width="260" alt="Início: leitor de QR no topo"></td>
+<td valign="top" width="50%"><b>Dica do morador (IA 2 e IA 3)</b><br><sub>O perfil de uso do morador (K-Means) e a previsão de ocupação de amanhã viram uma dica: "Carrega com o sol" e a melhor hora para carregar.</sub><br><img src="Evidencias/02-inicio-dica-perfil-previsao.png" width="260" alt="Dica do morador (IA 2 e IA 3)"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>Carregadores do prédio</b><br><sub>Lista com os usados por último primeiro. O Carregador 2 aparece em uso por outro morador.</sub><br><img src="apps/mobile/assets/evidencias/03-lista-carregadores.png" width="260" alt="Carregadores do prédio"></td>
-<td valign="top" width="50%"><b>Erro na leitura, com botão Voltar</b><br><sub>QR de um carregador em uso: o app explica, indica um carregador livre e oferece o botão Voltar.</sub><br><img src="apps/mobile/assets/evidencias/04-qr-erro-voltar.png" width="260" alt="Erro na leitura, com botão Voltar"></td>
+<td valign="top" width="50%"><b>Carregadores do prédio</b><br><sub>Lista com os usados por último primeiro. O Carregador 2 aparece em uso por outro morador.</sub><br><img src="Evidencias/03-lista-carregadores.png" width="260" alt="Carregadores do prédio"></td>
+<td valign="top" width="50%"><b>Erro na leitura, com botão Voltar</b><br><sub>QR de um carregador em uso: o app explica, indica um carregador livre e oferece o botão Voltar.</sub><br><img src="Evidencias/04-qr-erro-voltar.png" width="260" alt="Erro na leitura, com botão Voltar"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>QR lido: escolher o carro</b><br><sub>Ao ler o QR de um carregador livre, o app pergunta qual carro vai carregar (o morador tem dois).</sub><br><img src="apps/mobile/assets/evidencias/05-qr-lido-escolher-carro.png" width="260" alt="QR lido: escolher o carro"></td>
+<td valign="top" width="50%"><b>QR lido: escolher o carro</b><br><sub>Ao ler o QR de um carregador livre, o app pergunta qual carro vai carregar (o morador tem dois).</sub><br><img src="Evidencias/05-qr-lido-escolher-carro.png" width="260" alt="QR lido: escolher o carro"></td>
 <td width="50%"></td>
 </tr>
 </table>
@@ -182,11 +182,11 @@ Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Ela
 
 <table>
 <tr>
-<td valign="top" width="50%"><b>Carregando agora</b><br><sub>Recarga ao vivo no Carregador 1 com o BYD Dolphin: 100% da energia vinda do sol nos primeiros minutos.</sub><br><img src="apps/mobile/assets/evidencias/06-recarga-ao-vivo.png" width="260" alt="Carregando agora"></td>
-<td valign="top" width="50%"><b>Origem mudando ao longo do dia</b><br><sub>Com a tarde avançando na simulação, a rede e a bateria entram na mistura (66% sol, 3% bateria, 31% rede).</sub><br><img src="apps/mobile/assets/evidencias/07-recarga-ao-vivo-mistura.png" width="260" alt="Origem mudando ao longo do dia"></td>
+<td valign="top" width="50%"><b>Carregando agora</b><br><sub>Recarga ao vivo no Carregador 1 com o BYD Dolphin: 100% da energia vinda do sol nos primeiros minutos.</sub><br><img src="Evidencias/06-recarga-ao-vivo.png" width="260" alt="Carregando agora"></td>
+<td valign="top" width="50%"><b>Origem mudando ao longo do dia</b><br><sub>Com a tarde avançando na simulação, a rede e a bateria entram na mistura (66% sol, 3% bateria, 31% rede).</sub><br><img src="Evidencias/07-recarga-ao-vivo-mistura.png" width="260" alt="Origem mudando ao longo do dia"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>De onde veio a energia do seu carro</b><br><sub>Detalhe da recarga: kWh de sol, bateria e rede, quanto custou e quanto o morador economizou frente ao eletroposto público.</sub><br><img src="apps/mobile/assets/evidencias/08-detalhe-origem-energia.png" width="260" alt="De onde veio a energia do seu carro"></td>
+<td valign="top" width="50%"><b>De onde veio a energia do seu carro</b><br><sub>Detalhe da recarga: kWh de sol, bateria e rede, quanto custou e quanto o morador economizou frente ao eletroposto público.</sub><br><img src="Evidencias/08-detalhe-origem-energia.png" width="260" alt="De onde veio a energia do seu carro"></td>
 <td width="50%"></td>
 </tr>
 </table>
@@ -195,12 +195,12 @@ Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Ela
 
 <table>
 <tr>
-<td valign="top" width="50%"><b>Cadastro</b><br><sub>Dados do morador, abertos pelo avatar no topo da Início.</sub><br><img src="apps/mobile/assets/evidencias/09-perfil-cadastro.png" width="260" alt="Cadastro"></td>
-<td valign="top" width="50%"><b>Apartamentos</b><br><sub>O morador tem dois apartamentos (proprietário e inquilino) e pode adicionar outros.</sub><br><img src="apps/mobile/assets/evidencias/10-perfil-apartamentos.png" width="260" alt="Apartamentos"></td>
+<td valign="top" width="50%"><b>Cadastro</b><br><sub>Dados do morador, abertos pelo avatar no topo da Início.</sub><br><img src="Evidencias/09-perfil-cadastro.png" width="260" alt="Cadastro"></td>
+<td valign="top" width="50%"><b>Apartamentos</b><br><sub>O morador tem dois apartamentos (proprietário e inquilino) e pode adicionar outros.</sub><br><img src="Evidencias/10-perfil-apartamentos.png" width="260" alt="Apartamentos"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>Carros e integração</b><br><sub>BYD já conectada ao app da montadora (bateria e autonomia). A Renault pode ser conectada pelo botão.</sub><br><img src="apps/mobile/assets/evidencias/11-perfil-carros-integracao.png" width="260" alt="Carros e integração"></td>
-<td valign="top" width="50%"><b>Carro conectado</b><br><sub>Depois de conectar o Renault, o app passa a mostrar a bateria dele também.</sub><br><img src="apps/mobile/assets/evidencias/12-perfil-carro-conectado.png" width="260" alt="Carro conectado"></td>
+<td valign="top" width="50%"><b>Carros e integração</b><br><sub>BYD já conectada ao app da montadora (bateria e autonomia). A Renault pode ser conectada pelo botão.</sub><br><img src="Evidencias/11-perfil-carros-integracao.png" width="260" alt="Carros e integração"></td>
+<td valign="top" width="50%"><b>Carro conectado</b><br><sub>Depois de conectar o Renault, o app passa a mostrar a bateria dele também.</sub><br><img src="Evidencias/12-perfil-carro-conectado.png" width="260" alt="Carro conectado"></td>
 </tr>
 </table>
 
@@ -208,11 +208,11 @@ Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Ela
 
 <table>
 <tr>
-<td valign="top" width="50%"><b>Economia, aviso de revisão e fatura (IA 1)</b><br><sub>Recargas e fatura na mesma página. A IA reteve uma recarga com falha do carregador: ela não entra na fatura até o gestor conferir.</sub><br><img src="apps/mobile/assets/evidencias/13-fatura-economia-e-revisao.png" width="260" alt="Economia, aviso de revisão e fatura (IA 1)"></td>
-<td valign="top" width="50%"><b>Fatura por apartamento</b><br><sub>A fatura é dividida pelo carro que carregou. A recarga feita ao vivo já aparece no topo da lista.</sub><br><img src="apps/mobile/assets/evidencias/14-fatura-por-apartamento.png" width="260" alt="Fatura por apartamento"></td>
+<td valign="top" width="50%"><b>Economia, aviso de revisão e fatura (IA 1)</b><br><sub>Recargas e fatura na mesma página. A IA reteve uma recarga com falha do carregador: ela não entra na fatura até o gestor conferir.</sub><br><img src="Evidencias/13-fatura-economia-e-revisao.png" width="260" alt="Economia, aviso de revisão e fatura (IA 1)"></td>
+<td valign="top" width="50%"><b>Fatura por apartamento</b><br><sub>A fatura é dividida pelo carro que carregou. A recarga feita ao vivo já aparece no topo da lista.</sub><br><img src="Evidencias/14-fatura-por-apartamento.png" width="260" alt="Fatura por apartamento"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>Recarga em revisão</b><br><sub>A recarga retida pela IA fica marcada como "Em revisão" na lista do morador.</sub><br><img src="apps/mobile/assets/evidencias/15-recargas-lista-em-revisao.png" width="260" alt="Recarga em revisão"></td>
+<td valign="top" width="50%"><b>Recarga em revisão</b><br><sub>A recarga retida pela IA fica marcada como "Em revisão" na lista do morador.</sub><br><img src="Evidencias/15-recargas-lista-em-revisao.png" width="260" alt="Recarga em revisão"></td>
 <td width="50%"></td>
 </tr>
 </table>
@@ -221,24 +221,24 @@ Capturas do protótipo rodando no iPhone 17 (simulador iOS) com a API local. Ela
 
 <table>
 <tr>
-<td valign="top" width="50%"><b>Economia e cobrança retida</b><br><sub>Economia dos moradores com o sistema compartilhado e o primeiro alerta: recargas retidas pela IA antes de cobrar.</sub><br><img src="apps/mobile/assets/evidencias/16-gestor-economia-e-retencao.png" width="260" alt="Economia e cobrança retida"></td>
-<td valign="top" width="50%"><b>Insights</b><br><sub>Sobrecarga, saturação e a conta de expansão: o que a infra atual não comporta e quanto custa atender a fila.</sub><br><img src="apps/mobile/assets/evidencias/17-gestor-insights.png" width="260" alt="Insights"></td>
+<td valign="top" width="50%"><b>Economia e cobrança retida</b><br><sub>Economia dos moradores com o sistema compartilhado e o primeiro alerta: recargas retidas pela IA antes de cobrar.</sub><br><img src="Evidencias/16-gestor-economia-e-retencao.png" width="260" alt="Economia e cobrança retida"></td>
+<td valign="top" width="50%"><b>Insights</b><br><sub>Sobrecarga, saturação e a conta de expansão: o que a infra atual não comporta e quanto custa atender a fila.</sub><br><img src="Evidencias/17-gestor-insights.png" width="260" alt="Insights"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>Horários de pico e sobrecarga</b><br><sub>Demanda simultânea por hora contra o limite do circuito (barras laranja passaram dele) e ocupação dos carregadores.</sub><br><img src="apps/mobile/assets/evidencias/18-gestor-picos-sobrecarga.png" width="260" alt="Horários de pico e sobrecarga"></td>
-<td valign="top" width="50%"><b>Ocupação e origem da energia</b><br><sub>Esperas e desistências por falta de vaga, e o mix de energia dos últimos 14 dias.</sub><br><img src="apps/mobile/assets/evidencias/19-gestor-ocupacao-distribuicao.png" width="260" alt="Ocupação e origem da energia"></td>
+<td valign="top" width="50%"><b>Horários de pico e sobrecarga</b><br><sub>Demanda simultânea por hora contra o limite do circuito (barras laranja passaram dele) e ocupação dos carregadores.</sub><br><img src="Evidencias/18-gestor-picos-sobrecarga.png" width="260" alt="Horários de pico e sobrecarga"></td>
+<td valign="top" width="50%"><b>Ocupação e origem da energia</b><br><sub>Esperas e desistências por falta de vaga, e o mix de energia dos últimos 14 dias.</sub><br><img src="Evidencias/19-gestor-ocupacao-distribuicao.png" width="260" alt="Ocupação e origem da energia"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>Distribuição por carregador e morador</b><br><sub>Uso de cada carregador e quem mais consome energia.</sub><br><img src="apps/mobile/assets/evidencias/20-gestor-por-carregador-morador.png" width="260" alt="Distribuição por carregador e morador"></td>
-<td valign="top" width="50%"><b>Vale investir em mais carregadores?</b><br><sub>Capacidade atual contra a fila de espera e a comparação de custo entre carregadores compartilhados e individuais.</sub><br><img src="apps/mobile/assets/evidencias/21-gestor-investimento.png" width="260" alt="Vale investir em mais carregadores?"></td>
+<td valign="top" width="50%"><b>Distribuição por carregador e morador</b><br><sub>Uso de cada carregador e quem mais consome energia.</sub><br><img src="Evidencias/20-gestor-por-carregador-morador.png" width="260" alt="Distribuição por carregador e morador"></td>
+<td valign="top" width="50%"><b>Vale investir em mais carregadores?</b><br><sub>Capacidade atual contra a fila de espera e a comparação de custo entre carregadores compartilhados e individuais.</sub><br><img src="Evidencias/21-gestor-investimento.png" width="260" alt="Vale investir em mais carregadores?"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>IA 1: recarga retida para conferir</b><br><sub>Leitura de 136 kWh em 2h, fisicamente impossível para o carro: a IA segura a cobrança (R$ 115,51) até o gestor liberar ou descartar.</sub><br><img src="apps/mobile/assets/evidencias/22-gestor-ia-recargas-retidas.png" width="260" alt="IA 1: recarga retida para conferir"></td>
-<td valign="top" width="50%"><b>IA 1: decisão do gestor</b><br><sub>Depois de descartar, a recarga sai dos totais: o faturado voltou de R$ 2.683,84 para R$ 2.568,34 e a energia de 3.313 para 3.177 kWh.</sub><br><img src="apps/mobile/assets/evidencias/23-gestor-ia-decisao-descartada.png" width="260" alt="IA 1: decisão do gestor"></td>
+<td valign="top" width="50%"><b>IA 1: recarga retida para conferir</b><br><sub>Leitura de 136 kWh em 2h, fisicamente impossível para o carro: a IA segura a cobrança (R$ 115,51) até o gestor liberar ou descartar.</sub><br><img src="Evidencias/22-gestor-ia-recargas-retidas.png" width="260" alt="IA 1: recarga retida para conferir"></td>
+<td valign="top" width="50%"><b>IA 1: decisão do gestor</b><br><sub>Depois de descartar, a recarga sai dos totais: o faturado voltou de R$ 2.683,84 para R$ 2.568,34 e a energia de 3.313 para 3.177 kWh.</sub><br><img src="Evidencias/23-gestor-ia-decisao-descartada.png" width="260" alt="IA 1: decisão do gestor"></td>
 </tr>
 <tr>
-<td valign="top" width="50%"><b>IA 2: perfis e quem puxa da rede</b><br><sub>Moradores agrupados pelo jeito de usar (K-Means) e a parcela de energia da rede de cada perfil, para direcionar o incentivo ao horário solar.</sub><br><img src="apps/mobile/assets/evidencias/24-gestor-ia-perfis-rede.png" width="260" alt="IA 2: perfis e quem puxa da rede"></td>
-<td valign="top" width="50%"><b>IA 3: previsão de 7 dias</b><br><sub>Ocupação esperada, pico e melhor hora para carregar com o sol. É a mesma previsão que vira a dica do morador.</sub><br><img src="apps/mobile/assets/evidencias/25-gestor-ia-previsao.png" width="260" alt="IA 3: previsão de 7 dias"></td>
+<td valign="top" width="50%"><b>IA 2: perfis e quem puxa da rede</b><br><sub>Moradores agrupados pelo jeito de usar (K-Means) e a parcela de energia da rede de cada perfil, para direcionar o incentivo ao horário solar.</sub><br><img src="Evidencias/24-gestor-ia-perfis-rede.png" width="260" alt="IA 2: perfis e quem puxa da rede"></td>
+<td valign="top" width="50%"><b>IA 3: previsão de 7 dias</b><br><sub>Ocupação esperada, pico e melhor hora para carregar com o sol. É a mesma previsão que vira a dica do morador.</sub><br><img src="Evidencias/25-gestor-ia-previsao.png" width="260" alt="IA 3: previsão de 7 dias"></td>
 </tr>
 </table>
 
