@@ -9,6 +9,12 @@ O EV ChargeOps é um aplicativo para condomínios com carregadores compartilhado
 
 Este repositório tem duas partes: a **implementação da Sprint 02** (este topo do README) e a **documentação da Sprint 01** (a partir da seção "Documentação da Sprint 01"), mantida porque o protótipo segue o que foi planejado lá.
 
+## Vídeo pitch
+
+Demonstração do projeto em vídeo: [https://youtu.be/lOodSFOxlbk](https://youtu.be/lOodSFOxlbk)
+
+[![Vídeo pitch do EV ChargeOps](https://img.youtube.com/vi/lOodSFOxlbk/hqdefault.jpg)](https://youtu.be/lOodSFOxlbk)
+
 ## Sumário
 
 1. [O que foi implementado](#1-o-que-foi-implementado)
